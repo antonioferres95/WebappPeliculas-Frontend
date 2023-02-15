@@ -1,0 +1,23 @@
+table .btn{
+    margin-right: 7px;
+}
+
+.navbar-brand{
+    color:black;   
+}
+
+.nav-item{
+    color: black;
+}
+
+.form-check-input{
+    margin-right: 12px;
+}
+
+label{
+    margin-top: 12px;
+}
+
+.pointer{
+    cursor: pointer;
+}
