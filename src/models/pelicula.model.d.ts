@@ -12,6 +12,8 @@ export interface Pelicula{
     fechaLanzamiento:Date;
     actores:ActorPelicula[];
     generos:Genero[];
+    votoUsuario?:number;
+    promedioVoto?:number;
 }
 
 export interface LandingPageDTO{

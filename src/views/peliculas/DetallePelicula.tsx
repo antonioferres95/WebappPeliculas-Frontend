@@ -1,9 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom"
+import Swal from "sweetalert2";
 import { Pelicula } from "../../models/pelicula.model";
 import Cargando from "../../utils/Cargando";
-import { urlPeliculas } from "../../utils/Endpoints";
+import { urlPeliculas, urlRatings } from "../../utils/Endpoints";
+import Rating from "../../utils/Rating";
 
 export default function DetallePelicula(){
     
@@ -34,6 +36,11 @@ export default function DetallePelicula(){
         return `https://www.youtube.com/embed/${video_id}`;
     }
 
+    async function onVote(voto:number){
+        await axios.post(urlRatings, {puntuacion: voto, peliculaId: id})
+        Swal.fire({icon: "success", title: "Voto registrado"})
+    }
+
     return(
         pelicula ? 
             <div style={{display: 'flex'}}>
@@ -52,7 +59,12 @@ export default function DetallePelicula(){
                     )}
 
                     | {pelicula.fechaLanzamiento.toDateString()}
-
+                    | Tu voto: <Rating 
+                        maximoValor={5} 
+                        valorSeleccionado={pelicula.votoUsuario!} 
+                        onChange={onVote}
+                        />
+                    | Voto promedio: {pelicula.promedioVoto}
                     <div style={{display: 'flex', marginTop: '1rem'}}>
                         <span style={{display: 'inline-block', marginRight: '1rem'}}>
                             <img src={pelicula.poster} style={{width: '225px', height: '315px'}} alt="Poster Pelicula" />

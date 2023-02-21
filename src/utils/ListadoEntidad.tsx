@@ -19,7 +19,7 @@ export default function ListadoEntidad<T>(props: listadoEntidadProps<T>){
     }, [pagina, recordsPorPagina]); //El useEffect se actualiza cuando cambia la pagina y recordsPorPag
     
     async function cargarDatos() {
-        axios.get(props.url, {params: {pagina, recordsPorPagina}})
+        axios.get(props.url!, {params: {pagina, recordsPorPagina}})
         .then((response: AxiosResponse<T[]>) => { 
             const totalRegistros = parseInt(response.headers['cantidadtotalregistros']);
             setTotalPaginas(Math.ceil(totalRegistros/recordsPorPagina))
@@ -47,8 +47,10 @@ export default function ListadoEntidad<T>(props: listadoEntidadProps<T>){
     return(
         <div>
             <h2>{props.titulo}</h2>
-            <Link className="btn btn-primary" to={props.urlCrear}>Crear {props.nombreEntidad}</Link>
-
+            {props.urlCrear ? 
+                <Link className="btn btn-primary" to={props.urlCrear}>Crear {props.nombreEntidad}</Link>
+            : null}
+            
             <div className="form-group" style={{width: '150px'}}>
                 <label>Registros por página:</label>
                 <select className="form-grupo" defaultValue={5} onChange={(e) => {
@@ -75,9 +77,9 @@ export default function ListadoEntidad<T>(props: listadoEntidadProps<T>){
 }
 
 interface listadoEntidadProps<T>{
-    url:string;
-    urlCrear:string;
+    url?:string;
+    urlCrear?:string;
     titulo:string;
-    nombreEntidad:string;
+    nombreEntidad?:string;
     children(entidades:T[], botones:(urlEditar:string, id:number) => ReactElement):ReactElement;
 }

@@ -6,6 +6,7 @@ import alertaContext from "../../utils/AlertaContext";
 import confirmar from "../../utils/Confirmar";
 import css from './PeliculaIndividual.module.css';
 import { urlPeliculas } from "../../utils/Endpoints";
+import Autorizado from "../../auth/Autorizado";
 
 export default function PeliculaIndividual(props:peliculaIndividualProps){
 
@@ -21,18 +22,23 @@ export default function PeliculaIndividual(props:peliculaIndividualProps){
 
     return(
         <div className={css.div}>
-            <a href={urlPelicula}>
+            <Link to={urlPelicula}>
                 <img src={props.pelicula.poster} alt="Imagen pelicula" />
-            </a>
+            </Link>
             <p>
-                <a href={urlPelicula}>{props.pelicula.titulo}</a>
+                <Link to={urlPelicula}>{props.pelicula.titulo}</Link>
             </p>
-            <div>
-                <Link style={{marginRight: '1rem'}} className="btn btn-info" to={`/peliculas/editar/${props.pelicula.id}`}>
-                    Editar
-                </Link>
-                <button className="btn btn-danger" onClick={() => confirmar(() => borrarPelicula())}>Borrar</button>
-            </div>
+            <Autorizado
+                role="admin"
+                autorizado={
+                    <div>
+                        <Link style={{marginRight: '1rem'}} className="btn btn-info" to={`/peliculas/editar/${props.pelicula.id}`}>
+                            Editar
+                        </Link>
+                        <button className="btn btn-danger" onClick={() => confirmar(() => borrarPelicula())}>Borrar</button>
+                    </div>
+                }
+            />
         </div>
     )
 }

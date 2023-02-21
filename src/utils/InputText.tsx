@@ -10,7 +10,7 @@ export default function InputText(props: inputTextProps) {
   return (
     <div className="form-group">
       <label htmlFor={props.name}>{props.label}</label>
-      <Field name={props.name} placeholder={props.placeholder} className="form-control" />
+      <Field name={props.name} type={props.type} placeholder={props.placeholder} className="form-control" />
       <ErrorMessage name={props.name}>
         {(mensaje) => <div className="text-danger">{mensaje}</div>}
       </ErrorMessage>
@@ -20,6 +20,12 @@ export default function InputText(props: inputTextProps) {
 
 interface inputTextProps {
   name: string;
+  type: 'text'|'password';
   label: string;
   placeholder: string;
+}
+
+InputText.defaultProps = {
+  type: 'text',
+  placeholder: ''
 }

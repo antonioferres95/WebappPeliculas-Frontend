@@ -4,8 +4,8 @@ export default function MostrarErrores(props: mostrarErroresProps){
         <div>
             {props.errores ? 
                 <ul style={{color: 'red'}}>
-                    {props.errores.map((error) => 
-                        <li>{error}</li>
+                    {props.errores.map((error, indice) => 
+                        <li key={indice}>{error}</li>
                     )}
                 </ul>
             :null
